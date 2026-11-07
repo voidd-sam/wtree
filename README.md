@@ -1,35 +1,6 @@
-<div align="center">
-
 # wtree
 
-**A fast, lightweight, colorful file & directory tree viewer.**
-Written in pure Rust, with zero external dependencies.
-
-*Type one command. Get a beautiful tree of any directory.*
-
-<br>
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Language: Rust](https://img.shields.io/badge/Language-Rust-orange.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
-[![Dependencies: 0](https://img.shields.io/badge/Dependencies-0-brightgreen.svg?style=for-the-badge)](Cargo.toml)
-[![Binary size: 332 KB](https://img.shields.io/badge/Binary%20size-332%20KB-blue.svg?style=for-the-badge)](#-at-a-glance)
-
-<br>
-
-[Why wtree](#-why-wtree) •
-[Install](#-install) •
-[Usage](#-usage) •
-[Examples](#-examples) •
-[Behavior](#-behavior-notes) •
-[Layout](#-project-layout) •
-[Contributing](#-contributing) •
-[License](#-license)
-
-</div>
-
----
-
-## ✨ What it looks like
+A file and directory tree viewer written in Rust, with no external dependencies.
 
 ```text
 $ wtree
@@ -48,43 +19,31 @@ $ wtree
 1 directory, 9 files
 ```
 
-On a terminal, the output is colorized end to end:
+On a terminal the output is colored:
 
 | Element | Style |
 |---|---|
-| 📁 **Directories** | **bold blue** |
-| 🔗 **Symlinks** | cyan, followed by `-> target` |
-| 🪵 **Connectors** | dim gray box-drawing characters (`├──`, `└──`, `│`) |
-| 📊 **Footer** | summary line, `N directories, M files` |
+| Directories | bold blue |
+| Symlinks | cyan, followed by `-> target` |
+| Connectors | dim gray (`├──`, `└──`, `│`) |
+| Footer | summary line: `N directories, M files` |
 
----
+## About
 
-## 🚀 Why wtree
+wtree is a small alternative to the `tree` command. It has no external crates, so the whole program is a few source files.
 
-The classic `tree` command is great, but its implementations are either written in C (hard to read and extend) or pull in dozens of dependencies. **wtree** takes a different road:
+- Stripped release binary is about 332 KB.
+- Release build takes about 3 seconds.
+- Output is streamed while the directory is walked. The kernel's `d_type` is used, so no `stat` call is needed per entry. A tree of about 200 files prints in about 1 ms.
+- Dotfiles and common development directories are skipped by default (see [Skipped by default](#skipped-by-default)).
+- Exits cleanly on broken pipes (`wtree | head`) and skips unreadable subdirectories.
+- Honors `NO_COLOR` and `CLICOLOR_FORCE`.
 
-- 🪶 **Tiny**: a single ~332 KB stripped binary, zero external crates, and a release build in about 3 seconds.
-- ⚡ **Fast**: output is streamed while the directory is walked, and the kernel's `d_type` is used so no `stat` call is needed per entry. A tree of ~200 files prints in ~1 ms.
-- 🎨 **Beautiful by default**: bold blue directories, cyan symlinks with their target, gray box-drawing connectors, and a summary footer.
-- 🧹 **Sane defaults**: dotfiles and noisy development directories (`node_modules`, `target`, `.git`, `dist`, `build`, `.next`, `__pycache__`, `.venv`) are skipped, so you actually see your project.
-- 🤝 **A polite CLI citizen**: exits cleanly on broken pipes (`wtree | head`), skips unreadable subdirectories instead of crashing, and honors the `NO_COLOR` and `CLICOLOR_FORCE` conventions.
+## Install
 
-### 📈 At a glance
+### From source
 
-| Metric | Value |
-|---|---|
-| Stripped binary size | **~332 KB** |
-| External dependencies | **0** |
-| Release build time | **~3 seconds** |
-| Tree of ~200 files | printed in **~1 ms** |
-
----
-
-## 📦 Install
-
-### 🔨 From source (recommended)
-
-Requires a Rust toolchain. [rustup](https://rustup.rs) is the easiest way to get one.
+Requires a Rust toolchain ([rustup](https://rustup.rs)).
 
 ```bash
 git clone https://github.com/voidd-sam/wtree.git
@@ -95,30 +54,28 @@ cargo build --release
 sudo cp target/release/wtree /usr/local/bin/   # or ~/.local/bin
 ```
 
-### 📥 With cargo
+### With cargo
 
 ```bash
 cargo install --git https://github.com/voidd-sam/wtree
 ```
 
-### 💾 Prebuilt binary
+### Prebuilt binary
 
-Check the [releases page](https://github.com/voidd-sam/wtree/releases) for prebuilt **x86-64 Linux** binaries, then drop one anywhere on your `PATH`:
+Prebuilt x86-64 Linux binaries are on the [releases page](https://github.com/voidd-sam/wtree/releases). Put one anywhere on your `PATH`:
 
 ```bash
 cp wtree ~/.local/bin/    # or /usr/local/bin with sudo
 chmod +x ~/.local/bin/wtree
 ```
 
-### ✅ Verify the installation
+Check the install:
 
 ```bash
 wtree --version
 ```
 
----
-
-## 🧭 Usage
+## Usage
 
 ```bash
 wtree [OPTIONS] [PATH]
@@ -128,129 +85,89 @@ wtree [OPTIONS] [PATH]
 |---|---|
 | `<PATH>` | Directory to list (default: current directory) |
 | `-d`, `--depth <N>` | Maximum display depth (children of the root are level 1) |
-| `-a`, `--all` | Show hidden files and directories (dotfiles) |
+| `-a`, `--all` | Show hidden files and directories |
 | `-h`, `--help` | Print help |
 | `-V`, `--version` | Print version |
 
-<details>
-<summary><b>📖 Full <code>wtree --help</code> output</b></summary>
+## Examples
 
-```text
-wtree - a fast, colorful directory tree viewer
-
-USAGE:
-    wtree [OPTIONS] [PATH]
-
-ARGS:
-    <PATH>    Directory to list (default: current directory)
-
-OPTIONS:
-    -d, --depth <N>    Maximum display depth (children of the root are level 1)
-    -a, --all          Show hidden files and directories (dotfiles)
-    -h, --help         Print help
-    -V, --version      Print version
-```
-
-</details>
-
----
-
-## 🎯 Examples
-
-**Tree of the current directory:**
+Current directory:
 
 ```bash
 wtree
 ```
 
-**Tree of a specific project, capped at 2 levels deep:**
+A specific directory, 2 levels deep:
 
 ```bash
 wtree ~/projects/my-app --depth 2
 ```
 
-**Show everything** (including `.git`, `.env`, `node_modules`, …):
+Include hidden files and the normally skipped directories:
 
 ```bash
 wtree --all
 ```
 
-**Force color when piping into `less`:**
+Keep color when piping into `less`:
 
 ```bash
 CLICOLOR_FORCE=1 wtree | less -R
 ```
 
-**Disable color entirely:**
+Turn color off:
 
 ```bash
 NO_COLOR=1 wtree
 ```
 
-> [!TIP]
-> Color is automatic: wtree colorizes on a terminal and switches to plain text when piped or redirected, so `wtree | less` stays clean. `CLICOLOR_FORCE=1` is the escape hatch when you want colors through a pipe.
+## Behavior
 
----
+- **Sorting:** directories first, then files. Alphabetical and case-insensitive within each group.
+- **Symlinks:** printed in cyan with `-> target`. The target is shown even when color is off.
+- **Color:** on when stdout is a terminal, off when piped or redirected. `NO_COLOR` turns it off and `CLICOLOR_FORCE` turns it on.
+- **Broken pipes:** if the reader closes early (for example `wtree | head`), wtree exits without an error message.
+- **Unreadable subdirectories:** skipped silently.
 
-## 🧠 Behavior notes
-
-- 🔤 **Sorting**: directories first, then files; case-insensitive alphabetical order within each group.
-- 🔗 **Symlinks**: printed in cyan with `-> target`; the target is shown even when color is disabled.
-- 🎨 **Color**: auto-enabled when stdout is a TTY, auto-disabled when the output is piped or redirected. `NO_COLOR` disables it, `CLICOLOR_FORCE` forces it on.
-- 🚰 **Broken pipes**: when the consumer closes early (e.g. `wtree | head`), wtree exits cleanly instead of spewing a broken-pipe error.
-- 🔒 **Unreadable subdirectories**: skipped silently instead of aborting the whole run.
-
-### 🌍 Environment variables
+### Environment variables
 
 | Variable | Effect |
 |---|---|
-| `NO_COLOR` | Disables color, even on a TTY |
-| `CLICOLOR_FORCE` | Forces color on, even when piped or redirected |
+| `NO_COLOR` | Disables color, even on a terminal |
+| `CLICOLOR_FORCE` | Forces color, even when piped or redirected |
 
-### 🙈 Skipped by default
+### Skipped by default
 
-To keep the output useful rather than noisy, wtree hides dotfiles and these development directories:
+Dotfiles and these directories are hidden:
 
 ```text
 node_modules  target  .git  dist  build  .next  __pycache__  .venv
 ```
 
-Pass `--all` to see everything.
+Use `--all` to show them.
 
----
-
-## 🗂️ Project layout
+## Project layout
 
 ```text
 wtree/
-├── Cargo.toml        # package + release profile (LTO, strip, panic=abort)
+├── Cargo.toml        # package and release profile (LTO, strip, panic=abort)
 ├── Cargo.lock
 ├── LICENSE
 ├── README.md
 └── src/
     ├── main.rs       # entry point, help/version text, error mapping
-    ├── cli.rs        # hand-rolled arg parser (no clap)
-    ├── ignore.rs     # hidden-name + dev-dir skip rules
-    ├── style.rs      # ANSI color helpers + TTY detection
+    ├── cli.rs        # argument parser (no clap)
+    ├── ignore.rs     # hidden-name and dev-directory skip rules
+    ├── style.rs      # ANSI color helpers and TTY detection
     └── walker.rs     # directory walk, tree rendering, summary footer
 ```
 
----
+## Contributing
 
-## 🤝 Contributing
+Issues and pull requests are welcome at https://github.com/voidd-sam/wtree/.
 
-Issues and pull requests are welcome at <https://github.com/voidd-sam/wtree/>.
+The project is intentionally small: no external dependencies and a handful of files. Changes that keep it that way are the most likely to be merged.
 
-wtree is deliberately tiny: **zero external dependencies, one small crate, a handful of files.** If you'd like to contribute, keep that spirit. Small, readable, dependency-free changes are the most likely to be merged.
+## License
 
----
-
-## 📄 License
-
-Released under the [MIT License](LICENSE).
-
-<div align="center">
-
-<sub>Made with 🦀 Rust • If you like wtree, drop it a ⭐</sub>
-
-</div>
+MIT. See [LICENSE](LICENSE).
