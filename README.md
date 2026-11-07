@@ -1,23 +1,15 @@
+<div align="center">
+
 # wtree
+
+![banner](assets/banner.png)
 
 A file and directory tree viewer written in Rust, with no external dependencies.
 
-```text
-$ wtree
-.
-├── src
-│   ├── cli.rs
-│   ├── ignore.rs
-│   ├── main.rs
-│   ├── style.rs
-│   └── walker.rs
-├── Cargo.lock
-├── Cargo.toml
-├── LICENSE
-└── README.md
+</div>
 
-1 directory, 9 files
-```
+
+
 
 On a terminal the output is colored:
 
