@@ -62,12 +62,15 @@ cargo install --git https://github.com/voidd-sam/wtree
 
 ### Prebuilt binary
 
-Prebuilt x86-64 Linux binaries are on the [releases page](https://github.com/voidd-sam/wtree/releases). Put one anywhere on your `PATH`:
+Prebuilt binaries are on the [releases page](https://github.com/voidd-sam/wtree/releases). Put one anywhere on your `PATH`:
 
 ```bash
 cp wtree ~/.local/bin/    # or /usr/local/bin with sudo
 chmod +x ~/.local/bin/wtree
 ```
+
+> [!NOTE]
+> Prebuilt binaries are x86-64 Linux only. On other platforms, build from source.
 
 Check the install:
 
@@ -88,6 +91,9 @@ wtree [OPTIONS] [PATH]
 | `-a`, `--all` | Show hidden files and directories |
 | `-h`, `--help` | Print help |
 | `-V`, `--version` | Print version |
+
+> [!NOTE]
+> Dotfiles and common development directories are hidden unless you pass `--all`.
 
 ## Examples
 
@@ -120,6 +126,9 @@ Turn color off:
 ```bash
 NO_COLOR=1 wtree
 ```
+
+> [!TIP]
+> You don't need a flag for color. wtree uses it on a terminal and drops it when piped, so `wtree | less` stays clean. Use `CLICOLOR_FORCE=1` if you want color through a pipe.
 
 ## Behavior
 
@@ -167,6 +176,9 @@ wtree/
 Issues and pull requests are welcome at https://github.com/voidd-sam/wtree/.
 
 The project is intentionally small: no external dependencies and a handful of files. Changes that keep it that way are the most likely to be merged.
+
+> [!IMPORTANT]
+> Pull requests that add external crates will not be merged.
 
 ## License
 
