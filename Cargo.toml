@@ -1,0 +1,19 @@
+[package]
+name = "wtree"
+version = "0.1.0"
+edition = "2026"
+description = "A fast, lightweight, colorful file/folder tree viewer in pure Rust (zero dependencies)"
+authors = ["Sam.K"]
+license = "MIT"
+
+# The command users type is `tree`; the package is `tree-rs`.
+[[bin]]
+name = "wtree"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

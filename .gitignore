@@ -1,0 +1,14 @@
+# Rust build artifacts
+/target
+**/*.rs.bk
+
+# Local toolchain install (used during development on this sandbox)
+/.cargo
+/.rustup
+
+# Editor and OS files
+*.swp
+*.swo
+.DS_Store
+.idea/
+.vscode/
