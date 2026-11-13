@@ -1,14 +1,27 @@
 # Rust build artifacts
-/target
+/target/
 **/*.rs.bk
 
+# Cargo lock file (optional - see note below)
+# Cargo.lock
+
 # Local toolchain install (used during development on this sandbox)
-/.cargo
-/.rustup
+/.cargo/
+/.rustup/
 
 # Editor and OS files
 *.swp
 *.swo
+*~
 .DS_Store
+Thumbs.db
 .idea/
 .vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Rust analyzer / IDE specific
+.rust-analyzer/
+
+# Build output from cargo expand or other tools
+Cargo.expand
