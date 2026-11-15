@@ -1,6 +1,7 @@
 # Release artifacts (upload these to GitHub Releases instead)
 /wtree-v*/
 *.tar.gz
+*.sha256
 
 # Rust build output
 /target/
