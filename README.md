@@ -160,6 +160,5 @@ wtree/
     └── walker.rs     # directory walk, tree rendering, summary footer
 ```
 
-## NOTE
-
-The project is intentionally small: no external dependencies. Changes that keep it that way are the most likely to be merged.
+> [!NOTE]
+> The project is intentionally small: no external dependencies. Changes that keep it that way are the most likely to be merged.
