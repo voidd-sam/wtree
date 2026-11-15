@@ -4,28 +4,24 @@
 
 ![banner](assets/banner.png)
 
-A file and directory tree viewer written in Rust, with no external dependencies.
+A file and directory tree viewer for linux written in Rust, with no external dependencies.
 
 </div>
 
-
-
-
 On a terminal the output is colored:
 
-| Element | Style |
-|---|---|
-| Directories | bold blue |
-| Symlinks | cyan, followed by `-> target` |
-| Connectors | dim gray (`├──`, `└──`, `│`) |
-| Footer | summary line: `N directories, M files` |
+| Element     | Style                                  |
+| ----------- | -------------------------------------- |
+| Directories | bold blue                              |
+| Symlinks    | cyan, followed by `-> target`          |
+| Connectors  | dim gray (`├──`, `└──`, `│`)           |
+| Footer      | summary line: `N directories, M files` |
 
 ## About
 
-wtree is a small alternative to the `tree` command. It has no external crates, so the whole program is a few source files.
+wtree is a small file structure tool for linux. It has no external crates.
 
-- Stripped release binary is about 332 KB.
-- Release build takes about 3 seconds.
+- Binary is about 332 KB.
 - Output is streamed while the directory is walked. The kernel's `d_type` is used, so no `stat` call is needed per entry. A tree of about 200 files prints in about 1 ms.
 - Dotfiles and common development directories are skipped by default (see [Skipped by default](#skipped-by-default)).
 - Exits cleanly on broken pipes (`wtree | head`) and skips unreadable subdirectories.
@@ -54,7 +50,7 @@ cargo install --git https://github.com/voidd-sam/wtree
 
 ### Prebuilt binary
 
-Prebuilt binaries are on the [releases page](https://github.com/voidd-sam/wtree/releases). Put one anywhere on your `PATH`:
+Prebuilt binaries are on the [releases page](https://github.com/voidd-sam/wtree/releases).
 
 ```bash
 cp wtree ~/.local/bin/    # or /usr/local/bin with sudo
@@ -62,7 +58,7 @@ chmod +x ~/.local/bin/wtree
 ```
 
 > [!NOTE]
-> Prebuilt binaries are x86-64 Linux only. On other platforms, build from source.
+> Prebuilt binaries are x86-64 Linux only.
 
 Check the install:
 
@@ -76,13 +72,14 @@ wtree --version
 wtree [OPTIONS] [PATH]
 ```
 
-| Option | Description |
-|---|---|
-| `<PATH>` | Directory to list (default: current directory) |
+| Option              | Description                                              |
+| ------------------- | -------------------------------------------------------- |
+| `<PATH>`            | Directory to list (default: current directory)           |
 | `-d`, `--depth <N>` | Maximum display depth (children of the root are level 1) |
-| `-a`, `--all` | Show hidden files and directories |
-| `-h`, `--help` | Print help |
-| `-V`, `--version` | Print version |
+| `-a`, `--all`       | Show hidden files and directories                        |
+| `-h`, `--help`      | Print help                                               |
+| `-V`, `--version`   | Print version                                            |
+| `--icons`           | Shows icons of files and directory                       |
 
 > [!NOTE]
 > Dotfiles and common development directories are hidden unless you pass `--all`.
@@ -132,9 +129,9 @@ NO_COLOR=1 wtree
 
 ### Environment variables
 
-| Variable | Effect |
-|---|---|
-| `NO_COLOR` | Disables color, even on a terminal |
+| Variable         | Effect                                      |
+| ---------------- | ------------------------------------------- |
+| `NO_COLOR`       | Disables color, even on a terminal          |
 | `CLICOLOR_FORCE` | Forces color, even when piped or redirected |
 
 ### Skipped by default
@@ -163,15 +160,6 @@ wtree/
     └── walker.rs     # directory walk, tree rendering, summary footer
 ```
 
-## Contributing
+## NOTE
 
-Issues and pull requests are welcome at https://github.com/voidd-sam/wtree/.
-
-The project is intentionally small: no external dependencies and a handful of files. Changes that keep it that way are the most likely to be merged.
-
-> [!IMPORTANT]
-> Pull requests that add external crates will not be merged.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+The project is intentionally small: no external dependencies. Changes that keep it that way are the most likely to be merged.
