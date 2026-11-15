@@ -1,12 +1,16 @@
 [package]
 name = "wtree"
-version = "0.1.0"
+version = "0.1.3"
 edition = "2021"
 description = "A fast, lightweight, colorful file/folder tree viewer in pure Rust (zero dependencies)"
 authors = ["Sam.K"]
 license = "MIT"
+repository = "https://github.com/voidd-sam/wtree"
+readme = "README.md"
+keywords = ["tree", "cli", "filesystem", "directory"]
+categories = ["command-line-utilities", "filesystem"]
 
-# The command users type is `tree`; the package is `tree-rs`.
+# The command users type is `wtree`; the package is `wtree`.
 [[bin]]
 name = "wtree"
 path = "src/main.rs"

@@ -1,4 +1,4 @@
-//! tree-rs — a fast, lightweight, colorful file/folder tree viewer (pure std).
+//! wtree a fast, lightweight, colorful file/folder tree viewer (pure std).
 
 mod cli;
 mod ignore;
@@ -7,7 +7,7 @@ mod walker;
 
 use std::process::ExitCode;
 
-const VERSION: &str = "tree-rs 0.1.0";
+const VERSION: &str = "wtree 0.1.3";
 
 fn main() -> ExitCode {
     let argv: Vec<String> = std::env::args().collect();

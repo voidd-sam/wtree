@@ -1,14 +1,19 @@
+# directories
+/wtree-v
+
+
+
+
 # Rust build artifacts
 /target/
 **/*.rs.bk
 
 # Cargo lock file (optional - see note below)
-# Cargo.lock
+Cargo.lock
 
 # Local toolchain install (used during development on this sandbox)
 /.cargo/
 /.rustup/
-
 # Editor and OS files
 *.swp
 *.swo
