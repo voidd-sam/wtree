@@ -1,20 +1,20 @@
-# directories
-/wtree-v
+# Release artifacts (upload these to GitHub Releases instead)
+/wtree-v*/
+*.tar.gz
 
-
-
-
-# Rust build artifacts
+# Rust build output
 /target/
 **/*.rs.bk
+Cargo.expand
 
-# Cargo lock file (optional - see note below)
-Cargo.lock
-
-# Local toolchain install (used during development on this sandbox)
+# Local toolchain install
 /.cargo/
 /.rustup/
-# Editor and OS files
+
+# Rust analyzer
+.rust-analyzer/
+
+# Editors and OS files
 *.swp
 *.swo
 *~
@@ -24,9 +24,6 @@ Thumbs.db
 .vscode/
 *.sublime-project
 *.sublime-workspace
-
-# Rust analyzer / IDE specific
-.rust-analyzer/
 
 # Build output from cargo expand or other tools
 Cargo.expand
